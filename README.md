@@ -124,8 +124,9 @@ Setup process is described below to integrate in sample project.
 ```javascript
 final bagelToken =
     "YOUR BAGEL TOKEN";
+final PORT = 3000
 ```
-2. add: bagel token to server/.env
+2. add: variables to server/.env
 ```javascript
 PORT=3000
 BAGEL_TOK="YOUR BAGEL TOKEN"
