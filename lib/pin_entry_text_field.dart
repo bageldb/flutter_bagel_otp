@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PinEntryTextField extends StatefulWidget {
-  final String lastPin;
-  final int fields;
-  final onSubmit;
-  final double fieldWidth;
-  final double fontSize;
-  final bool isTextObscure;
-  final bool showFieldAsBox;
-
-  PinEntryTextField(
+  const PinEntryTextField(
       {this.lastPin = '',
       this.fields = 4,
       this.onSubmit,
@@ -18,6 +10,13 @@ class PinEntryTextField extends StatefulWidget {
       this.isTextObscure = false,
       this.showFieldAsBox = false})
       : assert(fields > 0);
+  final String lastPin;
+  final int fields;
+  final onSubmit;
+  final double fieldWidth;
+  final double fontSize;
+  final bool isTextObscure;
+  final bool showFieldAsBox;
   @override
   State createState() {
     return PinEntryTextFieldState();
@@ -68,10 +67,12 @@ class PinEntryTextFieldState extends State<PinEntryTextField> {
       FocusScope.of(context).requestFocus(_focusNodes[0]);
     }
 
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        verticalDirection: VerticalDirection.down,
-        children: textFields);
+    return Flex(
+      direction: Axis.horizontal,
+      mainAxisAlignment: MainAxisAlignment.center,
+      verticalDirection: VerticalDirection.down,
+      children: textFields,
+    );
   }
 
   void clearTextFields() {
@@ -123,23 +124,23 @@ class PinEntryTextFieldState extends State<PinEntryTextField> {
           });
           if (i + 1 != widget.fields) {
             _focusNodes[i].unfocus();
-            if (lastDigit != null && _pin[i] == '') {
+            if (_pin[i] == '') {
               FocusScope.of(context).requestFocus(_focusNodes[i - 1]);
             } else {
               FocusScope.of(context).requestFocus(_focusNodes[i + 1]);
             }
           } else {
             _focusNodes[i].unfocus();
-            if (lastDigit != null && _pin[i] == '') {
+            if (_pin[i] == '') {
               FocusScope.of(context).requestFocus(_focusNodes[i - 1]);
             }
           }
-          if (_pin.every((String digit) => digit != null && digit != '')) {
+          if (_pin.every((String digit) => digit != '')) {
             widget.onSubmit(_pin.join());
           }
         },
         onSubmitted: (String str) {
-          if (_pin.every((String digit) => digit != null && digit != '')) {
+          if (_pin.every((String digit) => digit != '')) {
             widget.onSubmit(_pin.join());
           }
         },

@@ -6,6 +6,7 @@ import 'screens/login_screen/login_screen.dart';
 import 'screens/otp_screen/otp_screen.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await init();
   runApp(MyApp());
 }

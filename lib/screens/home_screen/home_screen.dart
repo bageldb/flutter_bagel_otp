@@ -36,8 +36,8 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
                 borderRadius: BorderRadius.circular(16.0)),
-            child: Column(
-              children: const [
+            child: const Column(
+              children: [
                 Text(
                   'Phone Verification successful!',
                   style: TextStyle(fontSize: 20.0),

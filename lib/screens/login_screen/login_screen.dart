@@ -1,6 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_otp_module/bagel_db.dart';
 import 'package:flutter_otp_module/screens/login_screen/widget/country_picker.dart';
 import 'package:flutter_otp_module/screens/login_screen/widget/custom_send_otp_btn.dart';
@@ -19,9 +20,13 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_contactEditingController.text.isEmpty) {
       showErrorDialog(context, 'Contact number can\'t be empty.');
     } else {
-      final nonce = await db.bagelUsersRequest
-          .requestOtp('$_dialCode${_contactEditingController.text}');
-      print({'nonce': nonce});
+      try {
+        final nonce = await db.bagelUsersRequest
+            .requestOtp('$_dialCode${_contactEditingController.text}');
+        print({'nonce': nonce});
+      } catch (e, s) {
+        log(e.toString(), stackTrace: s);
+      }
 
       final responseMessage = await Navigator.pushNamed(context, '/otpScreen',
           arguments: '$_dialCode${_contactEditingController.text}');
@@ -165,9 +170,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 controller: _contactEditingController,
                                 keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(10)
-                                ],
                               ),
                             ),
                           ],
